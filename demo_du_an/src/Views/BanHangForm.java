@@ -822,7 +822,7 @@ public class BanHangForm extends javax.swing.JPanel {
 
         String tienKhachDua = txtTienKhachDua.getText().trim();
         if (tienKhachDua.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Thêm tiền");
+            JOptionPane.showMessageDialog(this, "Chưa đủ tiền");
             return;
         }
         double tienKhach;
@@ -836,7 +836,7 @@ public class BanHangForm extends javax.swing.JPanel {
         tienKhach = Double.parseDouble(tienKhachDua);
         tongThanhToan = Double.parseDouble(txtThanhToan.getText());
         if (tienKhach < tongThanhToan) {
-            JOptionPane.showMessageDialog(this, "Thêm tiền");
+            JOptionPane.showMessageDialog(this, "Chưa đủ tiền");
             return;
         }
         System.out.println(tienKhach);
