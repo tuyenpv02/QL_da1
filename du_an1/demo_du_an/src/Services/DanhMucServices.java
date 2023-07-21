@@ -12,11 +12,14 @@ import java.util.ArrayList;
  * @author TBC
  */
 public interface DanhMucServices {
+
     ArrayList<DanhMuc> getAll();
-    
+
     DanhMuc getDanhMucByMa(String ma);
-    
-    boolean insertDanhMuc(DanhMuc danhMuc); 
-    boolean updateDanhMuc(DanhMuc danhMuc); 
-    boolean deleteDanhMuc(String danhMuc); 
+
+    boolean insertDanhMuc(DanhMuc danhMuc);
+
+    boolean updateDanhMuc(DanhMuc danhMuc);
+
+    boolean deleteDanhMuc(String danhMuc);
 }

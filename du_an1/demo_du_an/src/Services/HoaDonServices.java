@@ -15,22 +15,27 @@ import java.util.ArrayList;
  * @author TBC
  */
 public interface HoaDonServices {
+
     // view ban hang
     ArrayList<HoaDonBanViewModels> getALLBanHang();
-    
+
     ArrayList<HoaDonBanViewModels> getALLByTrangThai(int tinhTrang);
-    
+
     HoaDon getHDByMa(String ma);
-    
+
     boolean insertHoaDonNull(HoaDonBanViewModels d);
-    
+
     boolean updateHoaDonTinhTrang(HoaDon d);
+
     boolean updateHDKhach(HoaDon d);
-    
+
     // view hoa don
     ArrayList<HoaDonViewModels> getAllHoaDon();
+
     ArrayList<HoaDonViewModels> timKiemHoaDon(String txt);
+
     ArrayList<HoaDonViewModels> locTrangThai(int txt);
+
     ArrayList<HoaDonHDCTViewModels> getHDCTByMaHD(String ma);
-    
+
 }

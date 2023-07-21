@@ -9,6 +9,7 @@ package ViewModels;
  * @author TBC
  */
 public class SachViewModels {
+
     private String ma;
     private String ten;
     private int soLuong;
@@ -39,8 +40,6 @@ public class SachViewModels {
         this.soLuong = soLuong;
     }
 
-  
-
     public double getGiaNhap() {
         return giaNhap;
     }
@@ -56,6 +55,5 @@ public class SachViewModels {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
-    
-    
+
 }

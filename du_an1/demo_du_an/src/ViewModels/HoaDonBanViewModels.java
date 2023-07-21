@@ -11,6 +11,7 @@ import java.sql.Date;
  * @author TBC
  */
 public class HoaDonBanViewModels {
+
     private String ma;
     private Date ngayTao;
     private String nhanVien;
@@ -28,8 +29,6 @@ public class HoaDonBanViewModels {
     public void setKhachHang(String khachHang) {
         this.khachHang = khachHang;
     }
-
-   
 
     public void setMa(String ma) {
         this.ma = ma;
@@ -58,6 +57,5 @@ public class HoaDonBanViewModels {
     public void setTinhTrang(int tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
-    
-    
+
 }

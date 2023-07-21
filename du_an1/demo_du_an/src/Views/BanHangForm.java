@@ -166,12 +166,12 @@ public class BanHangForm extends javax.swing.JPanel {
         }
         if (lstHoaDonChiTiet.size() == 0) {
             txtTongTien.setText("0");
-            
+
             txtTienKhachDua.setText("0");
             txtTienThua.setText("0");
         } else {
             txtTongTien.setText(tongTien + "");
-            txtThanhToan.setText(tongTien+"");
+            txtThanhToan.setText(tongTien + "");
         }
 
     }
@@ -755,7 +755,7 @@ public class BanHangForm extends javax.swing.JPanel {
         txtTienKhachDua.setText("");
         txtTienThua.setText("");
         txtGiam.setText("");
-        
+
         txtGhiChu.setText("");
         txtSuDungDiem.setText("");
 
@@ -861,17 +861,15 @@ public class BanHangForm extends javax.swing.JPanel {
         hoaDon.setSdt(kh.getSdt());
         hoaDon.setGhiChu(ghiChu);
         hoaDon.setTrangThai(1);
-        
 
-        
         if (hoaDonServices.updateHoaDonTinhTrang(hoaDon)) {
             String diemGiam = txtGiam.getText().trim();
             if (diemGiam.length() != 0) {
                 int diem = Integer.parseInt(diemGiam);
                 kh.setDiemTichLuy(kh.getDiemTichLuy() - diem);
             }
-            int diemTichLuy = (int)tongThanhToan/100;
-            kh.setDiemTichLuy(kh.getDiemTichLuy()+diemTichLuy);
+            int diemTichLuy = (int) tongThanhToan / 100;
+            kh.setDiemTichLuy(kh.getDiemTichLuy() + diemTichLuy);
             khachHangServices.updatetKhachHang(kh);
             JOptionPane.showMessageDialog(this, "thanh cong");
         } else {
@@ -1101,7 +1099,7 @@ public class BanHangForm extends javax.swing.JPanel {
                 lblDiemTichLuy.setText("");
                 txtSuDungDiem.setText("");
                 txtSuDungDiem.setEnabled(false);
-                
+
                 HoaDon hoaDon = hoaDonServices.getHDByMa(maHD);
                 if (hoaDon.getTrangThai() != 0) {
 //                    return;
@@ -1110,7 +1108,7 @@ public class BanHangForm extends javax.swing.JPanel {
 
                     hoaDonServices.updateHDKhach(hoaDon);
                 }
-                
+
             } else {
                 KhachHang kh = lstKhachHang.get(cbbKhachHang.getSelectedIndex() - 1);
 
@@ -1153,7 +1151,7 @@ public class BanHangForm extends javax.swing.JPanel {
         try {
             if (diemNhap.equals("")) {
                 txtGiam.setText("");
-                txtThanhToan.setText(tongTien+"");
+                txtThanhToan.setText(tongTien + "");
                 return;
             }
             Integer.parseInt(diemNhap);
@@ -1172,7 +1170,6 @@ public class BanHangForm extends javax.swing.JPanel {
 
         txtGiam.setText(diemGiam + "");
 
-        
         double tongThanhToan = tongTien - diemGiam;
         txtThanhToan.setText(tongThanhToan + "");
     }//GEN-LAST:event_txtSuDungDiemKeyReleased

@@ -9,7 +9,8 @@ package ViewModels;
  * @author TBC
  */
 public class ThongKeNamViewModels {
-     private int nam;
+
+    private int nam;
     private int tongHD;
     private int soLuongSPBan;
     private double doanhThu;
@@ -45,6 +46,5 @@ public class ThongKeNamViewModels {
     public void setDoanhThu(double doanhThu) {
         this.doanhThu = doanhThu;
     }
-    
-    
+
 }

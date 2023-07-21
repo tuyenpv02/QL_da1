@@ -18,21 +18,20 @@ import javax.swing.table.DefaultTableModel;
 public class HoaDonFrame extends javax.swing.JPanel {
 
     DefaultTableModel dtm;
-    
+
     HoaDonServices hoaDonServices = new HoaDonServicesImpl();
-    
+
     ArrayList<HoaDonViewModels> lstHoaDon;
-    
-    
+
     public HoaDonFrame() {
         initComponents();
-        
+
         lstHoaDon = hoaDonServices.getAllHoaDon();
         loadHoaDon(lstHoaDon);
         loadCBBTrangThai();
     }
-    
-    void loadCBBTrangThai(){
+
+    void loadCBBTrangThai() {
         cbbLocTrangThai.removeAllItems();
         cbbLocTrangThai.addItem("");
         cbbLocTrangThai.addItem("hóa đơn chờ");
@@ -57,6 +56,7 @@ public class HoaDonFrame extends javax.swing.JPanel {
             });
         }
     }
+
     void loadHoaDonChiTiet(ArrayList<HoaDonHDCTViewModels> ds) {
         dtm = (DefaultTableModel) tblHoaDonChiTiet.getModel();
 //        CTSach = thongKeServices.getAllSach();
@@ -72,19 +72,19 @@ public class HoaDonFrame extends javax.swing.JPanel {
             });
         }
     }
-    
-    private String getTrangThai(int x){
-        if(x==0){
+
+    private String getTrangThai(int x) {
+        if (x == 0) {
             return "hóa đơn chờ";
-        }else if(x==1){
+        } else if (x == 1) {
             return "đã thanh toán";
-        }else if(x==2){
+        } else if (x == 2) {
             return "hủy";
-        }else{
+        } else {
             return "lỗi";
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -295,7 +295,7 @@ public class HoaDonFrame extends javax.swing.JPanel {
         lstHoaDon = hoaDonServices.timKiemHoaDon(txtTim);
 
         loadHoaDon(lstHoaDon);
-        
+
         dtm = (DefaultTableModel) tblHoaDonChiTiet.getModel();
         dtm.setRowCount(0);
     }//GEN-LAST:event_txtTimKiemKeyReleased
@@ -312,9 +312,9 @@ public class HoaDonFrame extends javax.swing.JPanel {
                 int trangThai;
                 if (d.equalsIgnoreCase("hóa đơn chờ")) {
                     trangThai = 0;
-                } else if(d.equalsIgnoreCase("đã thanh toán")){
+                } else if (d.equalsIgnoreCase("đã thanh toán")) {
                     trangThai = 1;
-                }else {
+                } else {
                     trangThai = 2;
                 }
                 lstHoaDon = hoaDonServices.locTrangThai(trangThai);
@@ -326,12 +326,12 @@ public class HoaDonFrame extends javax.swing.JPanel {
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         // TODO add your handling code here:
         int row = tblHoaDon.getSelectedRow();
-        if(lstHoaDon.size()<=0){
+        if (lstHoaDon.size() <= 0) {
             return;
         }
-        
+
         HoaDonViewModels hdr = lstHoaDon.get(row);
-        
+
         ArrayList<HoaDonHDCTViewModels> hdct = hoaDonServices.getHDCTByMaHD(hdr.getMa());
         loadHoaDonChiTiet(hdct);
     }//GEN-LAST:event_tblHoaDonMouseClicked

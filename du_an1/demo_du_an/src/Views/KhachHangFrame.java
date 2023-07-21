@@ -15,7 +15,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
      */
     public KhachHangFrame() {
         initComponents();
-        
+
         pnlKhach.removeAll();
         pnlKhach.add(new KhachHangForm());
         pnlKhach.repaint();

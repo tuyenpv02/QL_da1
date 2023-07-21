@@ -11,7 +11,8 @@ import java.sql.Date;
  * @author TBC
  */
 public class NhanVienViewModels {
-     private String ma;
+
+    private String ma;
     private String ten;
     private int gioiTinh;
     private Date ngaySinh;
@@ -71,8 +72,6 @@ public class NhanVienViewModels {
         this.email = email;
     }
 
-  
-
     public String getDiaChi() {
         return diaChi;
     }
@@ -88,8 +87,6 @@ public class NhanVienViewModels {
     public void setSdt(String sdt) {
         this.sdt = sdt;
     }
-
- 
 
     public String getAnhDaiDien() {
         return anhDaiDien;
@@ -114,6 +111,5 @@ public class NhanVienViewModels {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
-    
-    
+
 }

@@ -167,7 +167,7 @@ public class DangNhapForm extends javax.swing.JFrame {
     private void lblDangKyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangKyMouseClicked
         lblDangKy.setForeground(Color.RED);
         DangKyForm d = new DangKyForm();
-        
+
 //        DangKy_chon d = new DangKy_chon();
         d.setVisible(true);
         d.setLocationRelativeTo(null);

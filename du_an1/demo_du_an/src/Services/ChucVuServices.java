@@ -12,13 +12,15 @@ import java.util.ArrayList;
  * @author TBC
  */
 public interface ChucVuServices {
-    
+
     ArrayList<ChucVu> getALl();
-    
+
     ChucVu getChucVuByMa(String ma);
-    
+
     boolean insertChucVu(ChucVu chucVu);
+
     boolean updateChucVu(ChucVu chucVu);
+
     boolean deleteChucVu(String chucVu);
-    
+
 }

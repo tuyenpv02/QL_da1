@@ -9,7 +9,7 @@ package ViewModels;
  * @author TBC
  */
 public class HoaDonViewModels {
-    
+
     private String ma;
     private double tongTien;
     private String ngayTao;
@@ -75,8 +75,6 @@ public class HoaDonViewModels {
         this.trangThai = trangThai;
     }
 
-  
-
     public String getGhiChu() {
         return ghiChu;
     }
@@ -84,7 +82,5 @@ public class HoaDonViewModels {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
-            
-    
-    
+
 }

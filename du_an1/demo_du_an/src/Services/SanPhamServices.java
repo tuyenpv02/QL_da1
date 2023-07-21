@@ -13,11 +13,14 @@ import java.util.ArrayList;
  * @author TBC
  */
 public interface SanPhamServices {
+
     ArrayList<SanPham> getAll();
-    
+
     SanPham getSanPhamByMa(String ma);
-    
-    boolean insertSanPham(SanPham danhMuc); 
-    boolean updateSanPham(SanPham danhMuc); 
-    boolean deleteSanPham(String danhMuc); 
+
+    boolean insertSanPham(SanPham danhMuc);
+
+    boolean updateSanPham(SanPham danhMuc);
+
+    boolean deleteSanPham(String danhMuc);
 }

@@ -13,16 +13,19 @@ import java.util.ArrayList;
  * @author TBC
  */
 public interface NhanVienServices {
-     ArrayList<NhanVienViewModels> getALL();
+
+    ArrayList<NhanVienViewModels> getALL();
+
     ArrayList<NhanVienViewModels> timKiem(String txt);
-     
+
     NhanVien getNhanVienByMa(String ma);
-    
-    
+
     boolean insertNhanVien(NhanVien c);
+
     boolean updatetNhanVien(NhanVien c);
+
     boolean deleteNhanVien(String ma);
-    
+
     boolean dangKy(NhanVien c);
-    
+
 }

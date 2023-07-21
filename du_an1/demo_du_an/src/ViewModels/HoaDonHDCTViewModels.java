@@ -9,6 +9,7 @@ package ViewModels;
  * @author TBC
  */
 public class HoaDonHDCTViewModels {
+
     private String ma;
     private String maSanPham;
     private String tenSanPham;
@@ -63,7 +64,5 @@ public class HoaDonHDCTViewModels {
     public void setThanhTien(double thanhTien) {
         this.thanhTien = thanhTien;
     }
-    
-   
-    
+
 }

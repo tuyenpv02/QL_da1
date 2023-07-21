@@ -54,29 +54,28 @@ public class KhachHangForm extends javax.swing.JPanel {
             });
         }
     }
-    
-    public void showDetail(KhachHang kh){
-         txtMa.setText(kh.getMa());
+
+    public void showDetail(KhachHang kh) {
+        txtMa.setText(kh.getMa());
         txtTen.setText(kh.getTen());
         txtDiaChi.setText(kh.getDiaChi());
         txtSdt.setText(kh.getSdt());
         txtMatKhau.setText(kh.getMatKhau());
         date_ngaySinh.setDate(kh.getNgaySinh());
         txtEmail.setText(kh.getEmail());
-        txtDiemTichLuy.setText(kh.getDiemTichLuy()+"");
+        txtDiemTichLuy.setText(kh.getDiemTichLuy() + "");
         if (kh.getGioiTinh() == 0) {
             rdoNu.setSelected(true);
         } else {
             rdoNam.setSelected(true);
         }
 
-         if (kh.getTrangThai() == 0) {
+        if (kh.getTrangThai() == 0) {
             rdoNgung.setSelected(true);
         } else {
             rdoDang.setSelected(true);
         }
-         
-         
+
     }
 
     private KhachHang getForm() {
@@ -471,20 +470,20 @@ public class KhachHangForm extends javax.swing.JPanel {
         String ma = txtMa.getText().trim();
         if (ma.length() == 0) {
             JOptionPane.showMessageDialog(this, "nhap ma");
-            return ;
-        }
-        
-        int check = JOptionPane.showConfirmDialog(this, "ban chac xoa ko?", "delete",JOptionPane.OK_CANCEL_OPTION);
-        if(check == JOptionPane.CANCEL_OPTION){
             return;
         }
-        
+
+        int check = JOptionPane.showConfirmDialog(this, "ban chac xoa ko?", "delete", JOptionPane.OK_CANCEL_OPTION);
+        if (check == JOptionPane.CANCEL_OPTION) {
+            return;
+        }
+
         if (khachHangServices.deleteKhachHang(ma)) {
             JOptionPane.showMessageDialog(this, "xoa thanh cong");
         } else {
             JOptionPane.showMessageDialog(this, "xoa that bai");
         }
-        lstKhachHang   = khachHangServices.getALL();
+        lstKhachHang = khachHangServices.getALL();
         loadSP(lstKhachHang);
     }//GEN-LAST:event_btnThem1ActionPerformed
 
@@ -503,7 +502,7 @@ public class KhachHangForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void txtTimKiemInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtTimKiemInputMethodTextChanged
-       
+
     }//GEN-LAST:event_txtTimKiemInputMethodTextChanged
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased

@@ -9,6 +9,7 @@ package ViewModels;
  * @author TBC
  */
 public class ThongKeThangViewModels {
+
     private double doanhThu;
     private int tongHD;
     private int hoaDonHuy;
@@ -45,6 +46,5 @@ public class ThongKeThangViewModels {
     public void setHoaDonThanhCong(int hoaDonThanhCong) {
         this.hoaDonThanhCong = hoaDonThanhCong;
     }
-    
-    
+
 }

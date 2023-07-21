@@ -65,23 +65,21 @@ public class NhanVienForm extends javax.swing.JPanel {
 //            JOptionPane.showMessageDialog(this, "sai ngày");
 //            return null;
 //        }
-        
         int gioiTinh = rdoNam.isSelected() ? 1 : 0;
         int trangThai = rdoDangLam.isSelected() ? 1 : 0;
         String hinh = duongDan;
         ChucVu chucVu = lstChucVu.get(cbbChucVu.getSelectedIndex());
 
-         NhanVien nv = new NhanVien();
+        NhanVien nv = new NhanVien();
         if (date_ngaySinh.getDate() == null) {
-            
+
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String ngaySinh = sdf.format(date_ngaySinh.getDate());
             Date n = Date.valueOf(ngaySinh);
             nv.setNgaySinh(n);
         }
-        
-       
+
         nv.setMa(ma);
         nv.setTen(ten);
         nv.setGioiTinh(gioiTinh);
@@ -110,7 +108,7 @@ public class NhanVienForm extends javax.swing.JPanel {
             dtm.addRow(new Object[]{
                 c.getMa(),
                 c.getTen(),
-                c.getGioiTinh()==1?"Nam":"nữ",
+                c.getGioiTinh() == 1 ? "Nam" : "nữ",
                 c.getSdt(),
                 c.getNgaySinh(),
                 c.getDiaChi(),
@@ -118,7 +116,7 @@ public class NhanVienForm extends javax.swing.JPanel {
                 c.getMatKhau(),
                 c.getAnhDaiDien(),
                 c.getChucVu(),
-                c.getTrangThai()==0?"ngưng làm":"đang làm"
+                c.getTrangThai() == 0 ? "ngưng làm" : "đang làm"
             });
         }
     }
@@ -536,12 +534,12 @@ public class NhanVienForm extends javax.swing.JPanel {
         if (ma.length() == 0) {
             JOptionPane.showMessageDialog(this, "nhap ma");
         }
-        
-         int check = JOptionPane.showConfirmDialog(this, "ban chac xoa ko?", "delete",JOptionPane.OK_CANCEL_OPTION);
-        if(check == JOptionPane.CANCEL_OPTION){
+
+        int check = JOptionPane.showConfirmDialog(this, "ban chac xoa ko?", "delete", JOptionPane.OK_CANCEL_OPTION);
+        if (check == JOptionPane.CANCEL_OPTION) {
             return;
         }
-        
+
         if (nhanVienServices.deleteNhanVien(ma)) {
             JOptionPane.showMessageDialog(this, "xoa thanh cong");
         } else {

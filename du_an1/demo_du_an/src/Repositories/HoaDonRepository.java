@@ -204,23 +204,24 @@ public class HoaDonRepository {
         }
         return ds;
     }
+
     public ArrayList<HoaDonViewModels> timKiemHoaDon(String txt) {
-        String sql = "select hd.Ma as mahd, hd.NgayTao as ngaytao,\n" +
-"hd.NgayThanhToan as NgayThanhToan, nv.Ma as maNV, kh.Ma as makh,\n" +
-"sum(hdct.SoLuong * hdct.DonGia) as 'TongTien'\n" +
-", hd.TrangThai as TrangThai, hd.GhiChu as ghiChu\n" +
-"from HoaDon hd left join NhanVien nv on nv.id=hd.IdNV\n" +
-"left join KhachHang kh on hd.IdKH=kh.Id\n" +
-"left join HoaDonChiTiet hdct on hd.id=hdct.IdHoaDon\n" +
-"left join ChiTietSP ctsp on hdct.IdChiTietSP=ctsp.id\n" +
-"left join SanPham sp on ctsp.IdSP=sp.id\n" +
-"  where hd.Ma like ? or nv.ma like ? or kh.Ma like ? \n" +
-"group by hd.Ma, hd.NgayTao, hd.NgayThanhToan, nv.Ma, kh.Ma, hd.TrangThai, hd.GhiChu";
+        String sql = "select hd.Ma as mahd, hd.NgayTao as ngaytao,\n"
+                + "hd.NgayThanhToan as NgayThanhToan, nv.Ma as maNV, kh.Ma as makh,\n"
+                + "sum(hdct.SoLuong * hdct.DonGia) as 'TongTien'\n"
+                + ", hd.TrangThai as TrangThai, hd.GhiChu as ghiChu\n"
+                + "from HoaDon hd left join NhanVien nv on nv.id=hd.IdNV\n"
+                + "left join KhachHang kh on hd.IdKH=kh.Id\n"
+                + "left join HoaDonChiTiet hdct on hd.id=hdct.IdHoaDon\n"
+                + "left join ChiTietSP ctsp on hdct.IdChiTietSP=ctsp.id\n"
+                + "left join SanPham sp on ctsp.IdSP=sp.id\n"
+                + "  where hd.Ma like ? or nv.ma like ? or kh.Ma like ? \n"
+                + "group by hd.Ma, hd.NgayTao, hd.NgayThanhToan, nv.Ma, kh.Ma, hd.TrangThai, hd.GhiChu";
         ArrayList<HoaDonViewModels> ds = new ArrayList<>();
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-             ps.setObject(1, "%"+txt+"%");
-             ps.setObject(2, "%"+txt+"%");
-             ps.setObject(3, "%"+txt+"%");
+            ps.setObject(1, "%" + txt + "%");
+            ps.setObject(2, "%" + txt + "%");
+            ps.setObject(3, "%" + txt + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HoaDonViewModels h = new HoaDonViewModels();
@@ -239,7 +240,7 @@ public class HoaDonRepository {
         }
         return ds;
     }
-    
+
     public ArrayList<HoaDonViewModels> locTrangThai(int txt) {
         String sql = "select hd.Ma as mahd, hd.NgayTao as ngaytao,\n"
                 + "hd.NgayThanhToan as NgayThanhToan, nv.Ma as maNV, kh.Ma as makh,\n"

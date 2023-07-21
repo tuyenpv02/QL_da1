@@ -9,6 +9,7 @@ package ViewModels;
  * @author TBC
  */
 public class ThongKeSPBanChayViewModels {
+
     private String ma;
     private String ten;
     private int soLuong;

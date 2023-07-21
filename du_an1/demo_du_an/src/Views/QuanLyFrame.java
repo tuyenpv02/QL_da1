@@ -26,20 +26,20 @@ public class QuanLyFrame extends javax.swing.JFrame {
         if (JDBC_helper.nhanVienDN != null) {
             nhanVien = JDBC_helper.nhanVienDN;
         }
-        
+
         loadNguoiDung(nhanVien);
-        
+
         pnlCards.removeAll();
         pnlCards.add(new BanHangForm());
         pnlCards.repaint();
         pnlCards.revalidate();
     }
-    
-    private void loadNguoiDung(NhanVien nv){
+
+    private void loadNguoiDung(NhanVien nv) {
         lblTenNhanVien.setText(nv.getTen());
         setAnh(nv.getAnhDaiDien());
     }
-    
+
     private void setAnh(String d) {
         lblAnhNhanVien.setText("");
 
@@ -62,7 +62,6 @@ public class QuanLyFrame extends javax.swing.JFrame {
 ////        pnlCards.repaint();
 ////        pnlCards.revalidate();
 //    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
