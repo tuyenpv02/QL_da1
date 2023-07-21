@@ -153,11 +153,14 @@ public class DangNhapForm extends javax.swing.JFrame {
         if (nhanVien.getMa() == null) {
             JOptionPane.showMessageDialog(this, "Nhập sai mã hoặc mật khẩu!");
         } else {
+           
             JDBC_helper.nhanVienDN = nhanVien;
             QuanLyFrame f = new QuanLyFrame();
             f.setVisible(true);
             f.setLocationRelativeTo(null);
+           dispose();
         }
+         
     }//GEN-LAST:event_btn_loginActionPerformed
 
     private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed

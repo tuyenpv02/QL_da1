@@ -20,8 +20,8 @@ import java.util.ArrayList;
  * @author TBC
  */
 public class HoaDonChiTietRepository {
-    
-     public ArrayList<HoaDonChiTietViewModels> getHDCTByMaHD(String maHD) {
+
+    public ArrayList<HoaDonChiTietViewModels> getHDCTByMaHD(String maHD) {
         String sql = "SELECT dbo.SanPham.Ma, dbo.SanPham.Ten, dbo.HoaDonChiTiet.SoLuong\n"
                 + ", dbo.HoaDonChiTiet.DonGia\n"
                 + "FROM   dbo.ChiTietSP INNER JOIN\n"
@@ -30,8 +30,7 @@ public class HoaDonChiTietRepository {
                 + "             dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id\n"
                 + "			 where HoaDon.ma= ?";
         ArrayList<HoaDonChiTietViewModels> ds = new ArrayList<>();
-        try (Connection con = DBConnection.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, maHD);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -48,7 +47,7 @@ public class HoaDonChiTietRepository {
         return ds;
     }
 
-      public boolean inserHoaDonCT(HoaDonChiTiet c) {
+    public boolean inserHoaDonCT(HoaDonChiTiet c) {
         String sql = "INSERT INTO [dbo].[HoaDonChiTiet]\n"
                 + "           ([IdHoaDon]\n"
                 + "           ,[IdChiTietSP]\n"
@@ -57,26 +56,26 @@ public class HoaDonChiTietRepository {
                 + "     VALUES(?,?,?,?)";
         return JDBC_helper.updateTong(sql, c.getIdHoaDon().getId(), c.getIdCHiTietSP().getId(), c.getSoLuong(), c.getDonGia()) > 0;
     }
-      
-       public boolean updateSLHoaDonCT(HoaDonChiTiet g) {
+
+    public boolean updateSLHoaDonCT(HoaDonChiTiet g) {
         String sql = "UPDATE [dbo].[HoaDonChiTiet]\n"
                 + "   SET [SoLuong] = ?\n"
                 + " WHERE [IdHoaDon] =  ? \n"
                 + " and  [IdChiTietSP] = ? ";
-        System.out.println(" --- "+g.toString());
+        System.out.println(" --- " + g.toString());
         int check = JDBC_helper.updateTong(sql, g.getSoLuong(),
-                 g.getIdHoaDon().getId(), g.getIdCHiTietSP().getId());
+                g.getIdHoaDon().getId(), g.getIdCHiTietSP().getId());
         return check > 0;
     }
-      
-      public boolean deleteGHCT(String idGh, String idChiTietSP) {
+
+    public boolean deleteGHCT(String idGh, String idChiTietSP) {
         String sql = "delete from [dbo].[HoaDonChiTiet]\n"
                 + " where [IdHoaDon] =  ? \n"
                 + " and [IdChiTietSP] = ? ";
         return JDBC_helper.updateTong(sql, idGh, idChiTietSP) > 0;
     }
-      
-       public HoaDonChiTiet getHDCTByID(String idHD, String idCTSp) {
+
+    public HoaDonChiTiet getHDCTByID(String idHD, String idCTSp) {
         String sql = "SELECT [IdHoaDon]\n"
                 + "      ,[IdChiTietSP]\n"
                 + "      ,[SoLuong]\n"
@@ -106,4 +105,3 @@ public class HoaDonChiTietRepository {
         }
     }
 }
-

@@ -5,6 +5,7 @@
 package Views;
 
 import DomainModels.ChiTietSP;
+import DomainModels.ChucVu;
 import DomainModels.DanhMuc;
 import DomainModels.HoaDon;
 import DomainModels.HoaDonChiTiet;
@@ -24,9 +25,25 @@ import Utilities.JDBC_helper;
 import ViewModels.CTSPViewModels;
 import ViewModels.HoaDonChiTietViewModels;
 import ViewModels.HoaDonBanViewModels;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.TableRowAlign;
+import org.apache.poi.xwpf.usermodel.TableWidthType;
+import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 
 /**
  *
@@ -63,6 +80,172 @@ public class BanHangForm extends javax.swing.JPanel {
         loadSPHD(lstSanPham); // load table sanpham
         loadCBB(); // load cbb loc san pham
         loadHoaDonByTinhTrang(0); // load table hoa don
+    }
+
+    private void taoHoaDon(String maHD, KhachHang kh,
+            ArrayList<HoaDonChiTietViewModels> ds,
+            String tongTien, String tienKhachDua, String tienGiam) {
+
+        HoaDon hoaDon = hoaDonServices.getHDByMa(maHD);
+
+        JFileChooser file = new JFileChooser("C:"); // mo hop thoai theo duong dan
+        int x = file.showOpenDialog(this); // mo hop thoai dialog
+
+        if (x != 0) {
+            return; // k return se ban loi
+        }
+
+        File file1 = file.getSelectedFile(); // tao file bang fchoose da chon o tren
+
+        if (file1.toString().lastIndexOf(".") == -1) {
+            file1 = new File(file1.toString() + ".doc"); // thêm đuôi
+        }
+
+        try {
+            XWPFDocument document = new XWPFDocument();
+//            FileOutputStream out = new FileOutputStream(new File("c:\\Downloads\\chillyfacts.docx"));
+            XWPFParagraph paragraph0 = document.createParagraph();
+            XWPFRun run0 = paragraph0.createRun();
+            run0.setFontSize(30);
+            paragraph0.setAlignment(ParagraphAlignment.CENTER);
+            run0.setText("Hóa Đơn Bán Hàng");
+            run0.setBold(true);
+//            run0.addBreak();
+
+            XWPFParagraph paragraph2 = document.createParagraph();
+            XWPFRun run = paragraph2.createRun();
+            paragraph2.setSpacingAfter(60);
+
+            run.setText("Khách hàng: ");
+            run.setText(kh.getTen());
+            run.addBreak();
+
+            XWPFParagraph paragraph3 = document.createParagraph();
+            XWPFRun run3 = paragraph3.createRun();
+            paragraph3.setSpacingAfter(60);
+            run3.setText("Địa chỉ: ");
+            run3.setText(hoaDon.getDiaChi() + "");
+            run3.setUnderline(UnderlinePatterns.WAVE);
+            run3.addBreak();
+
+            XWPFParagraph paragraph4 = document.createParagraph();
+            XWPFRun run4 = paragraph4.createRun();
+            paragraph4.setSpacingAfter(60);
+            run4.setText("Sdt: ");
+            run4.setText(hoaDon.getSdt() + "");
+            run4.addBreak();
+
+            XWPFParagraph paragraph5 = document.createParagraph();
+            XWPFRun run5 = paragraph5.createRun();
+            paragraph5.setSpacingAfter(60);
+            run5.setText("Ngày tạo: ");
+            run5.setText(hoaDon.getNgayTao() + "");
+            run5.addBreak();
+
+//            paragraph4.setBorderBottom(Borders.BIRDS_FLIGHT);
+            //create table
+            XWPFTable table = document.createTable();
+            table.setCellMargins(200, 200, 200, 200);
+            table.setTableAlignment(TableRowAlign.CENTER);
+
+            // chieu rong cua bang
+            CTTblWidth width = table.getCTTbl().addNewTblPr().addNewTblW();
+            width.setType(STTblWidth.DXA);
+            width.setW(BigInteger.valueOf(9000));
+
+            //create first row
+            XWPFTableRow row0 = table.getRow(0);
+            row0.setHeight(500);
+            XWPFTableCell cell0 = row0.getCell(0);
+            cell0.setText("STT");
+            cell0.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            XWPFTableCell cell1 = row0.createCell();
+//            cell1.setWidth("1000");
+            cell1.setWidthType(TableWidthType.AUTO);
+            cell1.setText("mã sản phẩm");
+            cell1.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            XWPFTableCell cell2 = row0.createCell();
+//            cell1.setWidthType(TableWidthType.AUTO);
+            cell2.setText("tên sản phẩm");
+            cell2.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            XWPFTableCell cell3 = row0.createCell();
+//            cell1.setWidthType(TableWidthType.AUTO);
+            cell3.setText("số lượng");
+            cell3.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            XWPFTableCell cell4 = row0.createCell();
+//            cell1.setWidthType(TableWidthType.AUTO);
+            cell4.setText("đơn giá");
+            cell4.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            XWPFTableCell cell5 = row0.createCell();
+//            cell5.setWidthType(TableWidthType.AUTO);
+            cell5.setText("thành tiền");
+            cell5.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            int i = 1;
+            for (HoaDonChiTietViewModels d : ds) {
+//                table.setCellMargins(100, 100, 100, 100);
+                XWPFTableRow tableRowTwo = table.createRow();
+                tableRowTwo.getCell(0).setText(i++ + "");
+                tableRowTwo.getCell(1).setText(d.getMaSanPham());
+                tableRowTwo.getCell(2).setText(d.getTenSanPham());
+                tableRowTwo.getCell(3).setText(d.getSoLuong() + "");
+                tableRowTwo.getCell(4).setText(d.getDonGia() + "");
+                tableRowTwo.getCell(5).setText((d.getSoLuong() * d.getDonGia()) + "");
+
+            }
+
+            XWPFParagraph paragraph8 = document.createParagraph();
+            XWPFRun run8 = paragraph8.createRun();
+            paragraph8.setSpacingAfter(60);
+            run8.setFontSize(13);
+//            paragraph0.setAlignment(ParagraphAlignment.LEFT);
+            run8.setText("Tổng tiền: ");
+            run8.setText(tongTien);
+            run8.setBold(true);
+            run8.addBreak();
+
+            XWPFRun run9 = paragraph8.createRun();
+            run9.setFontSize(13);
+            run9.setText("Tiền khách đưa: ");
+            run9.setText(tienKhachDua);
+            run9.addBreak();
+
+            double tong = Double.parseDouble(tongTien);
+            double tienKhach = Double.parseDouble(tienKhachDua);
+            double tienGiam1 = Double.parseDouble(tienGiam);
+            double tienThua = tong - tienKhach;
+            double tongThanhToan = tong - tienKhach - tienGiam1;
+
+            XWPFRun run10 = paragraph8.createRun();
+            run10.setFontSize(13);
+            run10.setText("Tiền thừa: ");
+            run10.setText(tienThua + "");
+            run10.addBreak();
+
+            XWPFRun run11 = paragraph8.createRun();
+            run11.setFontSize(13);
+            run11.setText("Tổng thanh toán: ");
+            run11.setText(tongThanhToan + "");
+            run11.addBreak();
+
+            try {
+                FileOutputStream fos = new FileOutputStream(file1.toString());
+                document.write(fos);
+                fos.close();
+                JOptionPane.showMessageDialog(this, "xuất thành công");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "xuất thất bại, vui thử nơi lưu trữ khác");
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "xuất thất bại");
+        }
+
     }
 
     private void loadHDCT(ArrayList<HoaDonChiTietViewModels> ds) {
@@ -163,12 +346,12 @@ public class BanHangForm extends javax.swing.JPanel {
         }
         if (lstHoaDonChiTiet.size() == 0) {
             txtTongTien.setText("0");
-            
+
             txtTienKhachDua.setText("0");
             txtTienThua.setText("0");
         } else {
             txtTongTien.setText(tongTien + "");
-            txtThanhToan.setText(tongTien+"");
+            txtThanhToan.setText(tongTien + "");
         }
 
     }
@@ -752,7 +935,7 @@ public class BanHangForm extends javax.swing.JPanel {
         txtTienKhachDua.setText("");
         txtTienThua.setText("");
         txtGiam.setText("");
-        
+
         txtGhiChu.setText("");
         txtSuDungDiem.setText("");
 
@@ -839,39 +1022,40 @@ public class BanHangForm extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Chưa đủ tiền");
             return;
         }
-        System.out.println(tienKhach);
-        System.out.println(tongThanhToan);
+//        System.out.println(tienKhach);
+//        System.out.println(tongThanhToan);
 
-//        String maKhach = cbbKhachHang.getSelectedItem().toString();
-//        KhachHang kh = new KhachHang();
-//        if (maKhach.length() == 0) {
-//
-//        } else {
-//            kh = khachHangServices.getKhachHangMa(maKhach);
-//        }
+        String maKhach = cbbKhachHang.getSelectedItem().toString();
+        KhachHang kh = new KhachHang();
+        if (maKhach.length() == 0) {
 
-//        String ghiChu = txtGhiChu.getText().trim();
-//
-//        HoaDon hoaDon = hoaDonServices.getHDByMa(maHD);
-//        hoaDon.setIdKhachHang(kh);
-//        hoaDon.setDiaChi(kh.getDiaChi());
-//        hoaDon.setSdt(kh.getSdt());
-//        hoaDon.setGhiChu(ghiChu);
-//        hoaDon.setTrangThai(1);
+        } else {
+            kh = khachHangServices.getKhachHangMa(maKhach);
+        }
 
-//        if (hoaDonServices.updateHoaDonTinhTrang(hoaDon)) {
-//            String diemGiam = txtGiam.getText().trim();
-//            if (diemGiam.length() != 0) {
-//                int diem = Integer.parseInt(diemGiam);
-//                kh.setDiemTichLuy(kh.getDiemTichLuy() - diem);
-//            }
-//            khachHangServices.updatetKhachHang(kh);
-//            JOptionPane.showMessageDialog(this, "thanh cong");
-//        } else {
-//            JOptionPane.showMessageDialog(this, "that bai");
-//        }
+        String ghiChu = txtGhiChu.getText().trim();
+
+        HoaDon hoaDon = hoaDonServices.getHDByMa(maHD);
+        hoaDon.setIdKhachHang(kh);
+        hoaDon.setDiaChi(kh.getDiaChi());
+        hoaDon.setSdt(kh.getSdt());
+        hoaDon.setGhiChu(ghiChu);
+        hoaDon.setTrangThai(1);
+
+        if (hoaDonServices.updateHoaDonTinhTrang(hoaDon)) {
+            String diemGiam = txtGiam.getText().trim();
+            if (diemGiam.length() != 0) {
+                int diem = Integer.parseInt(diemGiam);
+                kh.setDiemTichLuy(kh.getDiemTichLuy() - diem);
+            }
+            khachHangServices.updatetKhachHang(kh);
+            JOptionPane.showMessageDialog(this, "thanh cong");
+            taoHoaDon(maHD, kh, lstHoaDonChiTiet, txtTienKhachDua.getText(), tienKhachDua, diemGiam);
+        } else {
+            JOptionPane.showMessageDialog(this, "that bai");
+        }
 ////        loadCBB();
-//        lamMoi();
+        lamMoi();
         cbbKhachHang.setSelectedIndex(0);
         loadHoaDonByTinhTrang(0);
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -1094,7 +1278,7 @@ public class BanHangForm extends javax.swing.JPanel {
                 lblDiemTichLuy.setText("");
                 txtSuDungDiem.setText("");
                 txtSuDungDiem.setEnabled(false);
-                
+
                 HoaDon hoaDon = hoaDonServices.getHDByMa(maHD);
                 if (hoaDon.getTrangThai() != 0) {
 //                    return;
@@ -1103,7 +1287,7 @@ public class BanHangForm extends javax.swing.JPanel {
 
                     hoaDonServices.updateHDKhach(hoaDon);
                 }
-                
+
             } else {
                 KhachHang kh = lstKhachHang.get(cbbKhachHang.getSelectedIndex() - 1);
 
@@ -1146,7 +1330,7 @@ public class BanHangForm extends javax.swing.JPanel {
         try {
             if (diemNhap.equals("")) {
                 txtGiam.setText("");
-                txtThanhToan.setText(tongTien+"");
+                txtThanhToan.setText(tongTien + "");
                 return;
             }
             Integer.parseInt(diemNhap);
@@ -1165,7 +1349,6 @@ public class BanHangForm extends javax.swing.JPanel {
 
         txtGiam.setText(diemGiam + "");
 
-        
         double tongThanhToan = tongTien - diemGiam;
         txtThanhToan.setText(tongThanhToan + "");
     }//GEN-LAST:event_txtSuDungDiemKeyReleased

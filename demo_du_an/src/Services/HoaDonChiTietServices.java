@@ -13,10 +13,12 @@ import java.util.ArrayList;
  * @author TBC
  */
 public interface HoaDonChiTietServices {
+
     ArrayList<HoaDonChiTietViewModels> getHDCTByMa(String ma);
-    
-     boolean insertHoaDonCT(HoaDonChiTiet c);
+
+    boolean insertHoaDonCT(HoaDonChiTiet c);
+
     boolean updateHoaDonCT(HoaDonChiTiet c);
-    
+
     boolean deleteHoaDonCT(String idHD, String idChiTietSP);
 }

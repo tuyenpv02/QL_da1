@@ -61,7 +61,7 @@ public class CTSPRepository {
         }
         return ds;
     }
-    
+
     public ArrayList<CTSPViewModels> timKiem(String txt) {
         ArrayList<CTSPViewModels> ds = new ArrayList<>();
         String sql = "SELECT SanPham.Ma,SanPham.Ten\n"
@@ -83,7 +83,7 @@ public class CTSPRepository {
                 + "where CONCAT(SanPham.Ma, SanPham.Ten, TacGia.Ten, DanhMuc.Ten"
                 + ", MoTa) like ?";
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setObject(1, "%"+txt+"%");
+            ps.setObject(1, "%" + txt + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 CTSPViewModels ct = new CTSPViewModels();
@@ -106,6 +106,7 @@ public class CTSPRepository {
         }
         return ds;
     }
+
     public ArrayList<CTSPViewModels> locDanhMuc(String txt) {
         ArrayList<CTSPViewModels> ds = new ArrayList<>();
         String sql = "SELECT SanPham.Ma,SanPham.Ten\n"
@@ -148,6 +149,7 @@ public class CTSPRepository {
         }
         return ds;
     }
+
     public ArrayList<CTSPViewModels> locTacGia(String txt) {
         ArrayList<CTSPViewModels> ds = new ArrayList<>();
         String sql = "SELECT SanPham.Ma,SanPham.Ten\n"
@@ -190,6 +192,7 @@ public class CTSPRepository {
         }
         return ds;
     }
+
     public ArrayList<CTSPViewModels> locTrangThai(int txt) {
         ArrayList<CTSPViewModels> ds = new ArrayList<>();
         String sql = "SELECT SanPham.Ma,SanPham.Ten\n"
@@ -232,8 +235,8 @@ public class CTSPRepository {
         }
         return ds;
     }
-    
-       public CTSPViewModels getCTSPByMa(String maSP) {
+
+    public CTSPViewModels getCTSPByMa(String maSP) {
         String sql = "SELECT SanPham.Ma,SanPham.Ten\n"
                 + "      ,TacGia.Ten as [tacgia]\n"
                 + "      ,DanhMuc.Ten as [danhmuc]\n"
@@ -252,12 +255,11 @@ public class CTSPRepository {
                 + "           dbo.TacGia ON dbo.ChiTietSP.IdTacGia = dbo.TacGia.Id"
                 + " where dbo.SanPham.ma=?";
         CTSPViewModels ct = new CTSPViewModels();
-        try (Connection con = DBConnection.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, maSP);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-               ct.setMa(rs.getString("ma"));
+                ct.setMa(rs.getString("ma"));
                 ct.setTenSP(rs.getString("ten"));
                 ct.setTacGia(rs.getString("tacgia"));
                 ct.setTheLoai(rs.getString("danhmuc"));
@@ -275,15 +277,14 @@ public class CTSPRepository {
         return ct;
     }
 
-        public ChiTietSP getIdCTSPByMa(String masp) {
+    public ChiTietSP getIdCTSPByMa(String masp) {
         ChiTietSP c = new ChiTietSP();
         String sql = "SELECT  dbo.ChiTietSP.Id, dbo.SanPham.Ma, dbo.SanPham.Ten"
                 + ", dbo.ChiTietSP.soLuongTon \n"
                 + "FROM   dbo.ChiTietSP INNER JOIN\n"
                 + "       dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id\n"
                 + "	   where dbo.SanPham.Ma=?";
-        try (Connection con = DBConnection.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, masp);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -295,7 +296,7 @@ public class CTSPRepository {
         }
         return c;
     }
-       
+
     public boolean insertCTSanPham(ChiTietSP ct) {
         String sql = "INSERT INTO [dbo].[SanPham]\n"
                 + "           ([Ma]\n"
@@ -303,73 +304,73 @@ public class CTSPRepository {
                 + "     VALUES(?,?)\n"
                 + "	 declare @idSP varchar(max) \n"
                 + "	 select @idSP = id from SanPham where ma=?\n"
-                + "INSERT INTO [dbo].[ChiTietSP]\n" +
-                    "           ([IdSP]\n" +
-                    "           ,[IdTacGia]\n" +
-                    "           ,[IdDanhMuc]\n" +
-                    "           ,[IdNxb]\n" +
-                    "           ,[MoTa]\n" +
-                    "           ,[SoLuongTon]\n" +
-                    "           ,[GiaNhap]\n" +
-                    "           ,[GiaBan]\n" +
-                    "           ,[AnhDaiDien]\n" +
-                    "           ,[TrangThai])\n" 
+                + "INSERT INTO [dbo].[ChiTietSP]\n"
+                + "           ([IdSP]\n"
+                + "           ,[IdTacGia]\n"
+                + "           ,[IdDanhMuc]\n"
+                + "           ,[IdNxb]\n"
+                + "           ,[MoTa]\n"
+                + "           ,[SoLuongTon]\n"
+                + "           ,[GiaNhap]\n"
+                + "           ,[GiaBan]\n"
+                + "           ,[AnhDaiDien]\n"
+                + "           ,[TrangThai])\n"
                 + "     VALUES(@idsp,?,?,?,?,?,?,?,?,?)";
         CTSPViewModels c = getCTSPByMa(ct.getSanPham().getMa());
         if (c.getMa() != null) {
             JOptionPane.showMessageDialog(null, "ma sp ton tai");
             return false;
         }
-        return JDBC_helper.updateTong(sql, 
+        return JDBC_helper.updateTong(sql,
                 ct.getSanPham().getMa(), ct.getSanPham().getTen(),
-                ct.getSanPham().getMa()
-                , ct.getTacGia().getId()
-                , ct.getDanhMuc().getId()
-                , ct.getNxb().getId()
-                ,  ct.getMoTa()
-                , ct.getSoLuongTon()
-                , ct.getGiaNhap()
-                , ct.getGiaBan()
-                , ct.getAnhDaiDien()
-                , ct.getTrangThai()) > 0;
+                ct.getSanPham().getMa(),
+                ct.getTacGia().getId(),
+                ct.getDanhMuc().getId(),
+                ct.getNxb().getId(),
+                ct.getMoTa(),
+                ct.getSoLuongTon(),
+                ct.getGiaNhap(),
+                ct.getGiaBan(),
+                ct.getAnhDaiDien(),
+                ct.getTrangThai()) > 0;
     }
-    
-     public boolean updateCTSanPham(ChiTietSP ct) {
+
+    public boolean updateCTSanPham(ChiTietSP ct) {
         String sql = "update SanPham set ten=? where ma=?\n"
-                + " UPDATE [dbo].[ChiTietSP]\n" +
-                    "   SET \n" +
-                    "      [IdTacGia] = ?\n" +
-                    "      ,[IdDanhMuc] = ?\n" +
-                    "      ,[IdNxb] = ?\n" +
-                    "      ,[MoTa] = ?\n" +
-                    "      ,[SoLuongTon] = ?\n" +
-                    "      ,[GiaNhap] = ?\n" +
-                    "      ,[GiaBan] = ?\n" +
-                    "      ,[AnhDaiDien] = ?\n" +
-                    "      ,[TrangThai] = ?\n" +
-                    " WHERE IdSP = ?";
-        return JDBC_helper.updateTong(sql, 
-                ct.getSanPham().getTen(), ct.getSanPham().getMa()
-                , ct.getTacGia().getId()
-                , ct.getDanhMuc().getId()
-                , ct.getNxb().getId()
-                , ct.getMoTa()
-                , ct.getSoLuongTon()
-                , ct.getGiaNhap()
-                , ct.getGiaBan()
-                , ct.getAnhDaiDien()
-                , ct.getTrangThai()
-                , ct.getSanPham().getId()) > 0;
+                + " UPDATE [dbo].[ChiTietSP]\n"
+                + "   SET \n"
+                + "      [IdTacGia] = ?\n"
+                + "      ,[IdDanhMuc] = ?\n"
+                + "      ,[IdNxb] = ?\n"
+                + "      ,[MoTa] = ?\n"
+                + "      ,[SoLuongTon] = ?\n"
+                + "      ,[GiaNhap] = ?\n"
+                + "      ,[GiaBan] = ?\n"
+                + "      ,[AnhDaiDien] = ?\n"
+                + "      ,[TrangThai] = ?\n"
+                + " WHERE IdSP = ?";
+        return JDBC_helper.updateTong(sql,
+                ct.getSanPham().getTen(), ct.getSanPham().getMa(),
+                ct.getTacGia().getId(),
+                ct.getDanhMuc().getId(),
+                ct.getNxb().getId(),
+                ct.getMoTa(),
+                ct.getSoLuongTon(),
+                ct.getGiaNhap(),
+                ct.getGiaBan(),
+                ct.getAnhDaiDien(),
+                ct.getTrangThai(),
+                ct.getSanPham().getId()) > 0;
     }
-     
-      public boolean updateSoLuong(ChiTietSP c) {
+
+    public boolean updateSoLuong(ChiTietSP c) {
         String sql = "update ChiTietSP set SoLuongTon = ?\n"
                 + " where id=?";
         return JDBC_helper.updateTong(sql, c.getSoLuongTon(),
-               c.getId()) > 0;
+                c.getId()) > 0;
     }
-     
-      public boolean deleteCTSP(String idSP) {
+
+    public boolean deleteCTSP(String idSP) {
         String sql = "delete ChiTietSP where IdSP=?";
         return JDBC_helper.updateTong(sql, idSP) > 0;
     }

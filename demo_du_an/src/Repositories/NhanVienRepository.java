@@ -24,7 +24,7 @@ public class NhanVienRepository {
     public static void main(String[] args) {
 
     }
-    
+
     public ArrayList<NhanVienViewModels> getAll() {
         ArrayList<NhanVienViewModels> ds = new ArrayList<>();
         String sql = "SELECT NhanVien.[Ma]\n"
@@ -62,25 +62,25 @@ public class NhanVienRepository {
         }
         return ds;
     }
-    
+
     public ArrayList<NhanVienViewModels> timKiem(String txt) {
         ArrayList<NhanVienViewModels> ds = new ArrayList<>();
-        String sql = "SELECT NhanVien.[Ma]\n" +
-"      ,NhanVien.[Ten]\n" +
-"	  ,ChucVu.Ten as 'tencv'\n" +
-"      ,[GioiTinh]\n" +
-"      ,[NgaySinh]\n" +
-"      ,[DiaChi]\n" +
-"      ,[Sdt]\n" +
-"      ,[AnhDaiDien]\n" +
-"      ,[Email]\n" +
-"      ,[MatKhau]\n" +
-"      ,[IdCV]\n" +
-"      ,[TrangThai]\n" +
-"  FROM [dbo].[NhanVien] left JOIN ChucVu ON NhanVien.IdCV=ChucVu.ID\n" +
-"  where  CONCAT(NhanVien.Ten, NhanVien.DiaChi, NhanVien.Ma) like ?";
+        String sql = "SELECT NhanVien.[Ma]\n"
+                + "      ,NhanVien.[Ten]\n"
+                + "	  ,ChucVu.Ten as 'tencv'\n"
+                + "      ,[GioiTinh]\n"
+                + "      ,[NgaySinh]\n"
+                + "      ,[DiaChi]\n"
+                + "      ,[Sdt]\n"
+                + "      ,[AnhDaiDien]\n"
+                + "      ,[Email]\n"
+                + "      ,[MatKhau]\n"
+                + "      ,[IdCV]\n"
+                + "      ,[TrangThai]\n"
+                + "  FROM [dbo].[NhanVien] left JOIN ChucVu ON NhanVien.IdCV=ChucVu.ID\n"
+                + "  where  CONCAT(NhanVien.Ten, NhanVien.DiaChi, NhanVien.Ma) like ?";
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-           ps.setObject(1, "%"+txt+"%");
+            ps.setObject(1, "%" + txt + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 NhanVienViewModels ct = new NhanVienViewModels();
@@ -112,7 +112,7 @@ public class NhanVienRepository {
                 + "      ,NhanVien.[Ten]\n"
                 + "	  ,ChucVu.Ma as 'macv' \n"
                 + "	  ,ChucVu.Ten as 'tencv' \n"
-                 + "	  ,ChucVu.VaiTro as 'vaitro' \n"
+                + "	  ,ChucVu.VaiTro as 'vaitro' \n"
                 + "      ,[GioiTinh]\n"
                 + "      ,[NgaySinh]\n"
                 + "      ,[DiaChi]\n"
@@ -130,12 +130,12 @@ public class NhanVienRepository {
                 ct.setId(rs.getString("id"));
                 ct.setMa(rs.getString("ma"));
                 ct.setTen(rs.getString("ten"));
-                
+
                 ChucVu chucVu = new ChucVu();
                 chucVu.setMa(rs.getString("macv"));
                 chucVu.setTen(rs.getString("tencv"));
-                 chucVu.setVaiTro(rs.getInt("vaitro"));
-                 
+                chucVu.setVaiTro(rs.getInt("vaitro"));
+
                 ct.setIdChucVu(chucVu);
                 ct.setGioiTinh(rs.getInt("GioiTinh"));
                 ct.setNgaySinh(rs.getDate("NgaySinh"));
@@ -161,7 +161,7 @@ public class NhanVienRepository {
                 + "           ,[NgaySinh]\n"
                 + "           ,[DiaChi]\n"
                 + "           ,[Sdt]\n"
-                 + "           ,[Email]\n"
+                + "           ,[Email]\n"
                 + "           ,[AnhDaiDien]\n"
                 + "           ,[MatKhau]\n"
                 + "           ,[IdCV]\n"
@@ -174,8 +174,8 @@ public class NhanVienRepository {
         }
         return JDBC_helper.updateTong(sql,
                 nv.getMa(), nv.getTen(), nv.getGioiTinh(), nv.getNgaySinh(),
-                nv.getDiaChi(), nv.getSdt(),nv.getEmail(), nv.getAnhDaiDien()
-                , nv.getMatKhau(),nv.getIdChucVu().getId(), nv.getTrangThai()
+                nv.getDiaChi(), nv.getSdt(), nv.getEmail(), nv.getAnhDaiDien(),
+                 nv.getMatKhau(), nv.getIdChucVu().getId(), nv.getTrangThai()
         ) > 0;
     }
 
@@ -192,20 +192,20 @@ public class NhanVienRepository {
                 + "      ,[IdCV] = ?\n"
                 + "      ,[TrangThai] = ?\n"
                 + " WHERE Ma = ?";
-        return JDBC_helper.updateTong(sql, n.getTen(), n.getGioiTinh()
-                , n.getNgaySinh(), n.getDiaChi(), n.getSdt()
-                , n.getAnhDaiDien(),n.getEmail(), n.getMatKhau()
-                ,n.getIdChucVu().getId(), n.getTrangThai()
-                , n.getMa() ) > 0;
+        return JDBC_helper.updateTong(sql, n.getTen(), n.getGioiTinh(),
+                 n.getNgaySinh(), n.getDiaChi(), n.getSdt(),
+                 n.getAnhDaiDien(), n.getEmail(), n.getMatKhau(),
+                 n.getIdChucVu().getId(), n.getTrangThai(),
+                 n.getMa()) > 0;
     }
-    
-      public boolean deleteNhanVien(String m){
-        String sql="DELETE FROM [dbo].[NhanVien]\n" +
-"      WHERE ma=?";
-        return JDBC_helper.updateTong(sql,m)>0;
+
+    public boolean deleteNhanVien(String m) {
+        String sql = "DELETE FROM [dbo].[NhanVien]\n"
+                + "      WHERE ma=?";
+        return JDBC_helper.updateTong(sql, m) > 0;
     }
-      
-      public NhanVien dangNhap(String ma, String matKhau) {
+
+    public NhanVien dangNhap(String ma, String matKhau) {
         NhanVien ct = new NhanVien();
 
         String sql = "SELECT NhanVien.[id] "
@@ -232,12 +232,12 @@ public class NhanVienRepository {
                 ct.setId(rs.getString("id"));
                 ct.setMa(rs.getString("ma"));
                 ct.setTen(rs.getString("ten"));
-                
+
                 ChucVu chucVu = new ChucVu();
                 chucVu.setMa(rs.getString("macv"));
                 chucVu.setTen(rs.getString("tencv"));
                 chucVu.setVaiTro(rs.getInt("vaitro"));
-                
+
                 ct.setIdChucVu(chucVu);
                 ct.setGioiTinh(rs.getInt("GioiTinh"));
                 ct.setNgaySinh(rs.getDate("NgaySinh"));
@@ -254,8 +254,8 @@ public class NhanVienRepository {
         }
         return ct;
     }
-      
-       public boolean dangKy(NhanVien nv) {
+
+    public boolean dangKy(NhanVien nv) {
         String sql = "INSERT INTO [dbo].[NhanVien]\n"
                 + "           ([Ma]\n"
                 + "           ,[Ten]\n"
@@ -270,8 +270,8 @@ public class NhanVienRepository {
         }
         return JDBC_helper.updateTong(sql,
                 nv.getMa(), nv.getTen(),
-                nv.getGioiTinh(), nv.getMatKhau()
-               , nv.getTrangThai()
+                nv.getGioiTinh(), nv.getMatKhau(),
+                 nv.getTrangThai()
         ) > 0;
     }
 }

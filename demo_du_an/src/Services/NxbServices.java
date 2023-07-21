@@ -13,11 +13,14 @@ import java.util.ArrayList;
  * @author TBC
  */
 public interface NxbServices {
+
     ArrayList<NXB> getAll();
-    
+
     NXB getNXBByMa(String ma);
-    
-    boolean insertNXB(NXB danhMuc); 
-    boolean updateNXB(NXB danhMuc); 
-    boolean deleteNXB(String danhMuc); 
+
+    boolean insertNXB(NXB danhMuc);
+
+    boolean updateNXB(NXB danhMuc);
+
+    boolean deleteNXB(String danhMuc);
 }

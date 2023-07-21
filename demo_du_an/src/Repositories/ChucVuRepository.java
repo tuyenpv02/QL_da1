@@ -17,16 +17,14 @@ import java.util.ArrayList;
  * @author TBC
  */
 public class ChucVuRepository {
-    
-    public ArrayList<ChucVu> getAll(){
-        String sql ="select id,ma,ten,vaiTro from ChucVu";
+
+    public ArrayList<ChucVu> getAll() {
+        String sql = "select id,ma,ten,vaiTro from ChucVu";
         ArrayList<ChucVu> ds = new ArrayList<>();
-        
-        try (Connection con = DBConnection.getConnection();
-                PreparedStatement ps = con.prepareCall(sql)
-                ){
+
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(sql)) {
             ResultSet rs = ps.executeQuery();
-             while (rs.next()) {
+            while (rs.next()) {
                 ChucVu m = new ChucVu();
                 m.setId(rs.getString("id"));
                 m.setMa(rs.getString("ma"));
@@ -34,19 +32,18 @@ public class ChucVuRepository {
                 m.setVaiTro(rs.getInt("vaiTro"));
                 ds.add(m);
             }
-            
+
         } catch (Exception e) {
         }
-        
+
         return ds;
     }
-    
-    public ChucVu getChucVuByMa(String ma){
-         String sql = "select id,ma,ten,vaiTro from ChucVu where ma=?";
+
+    public ChucVu getChucVuByMa(String ma) {
+        String sql = "select id,ma,ten,vaiTro from ChucVu where ma=?";
         ChucVu m = new ChucVu();
 
-        try (Connection con = DBConnection.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, ma);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -60,18 +57,20 @@ public class ChucVuRepository {
         }
         return m;
     }
-    
-     public boolean insertChucVu(ChucVu m){
-        String sql="insert into ChucVu(ma,ten,vaiTro) values(?,?,?)";
-        return JDBC_helper.updateTong(sql, m.getMa(),m.getTen(),m.getVaiTro())>0;
+
+    public boolean insertChucVu(ChucVu m) {
+        String sql = "insert into ChucVu(ma,ten,vaiTro) values(?,?,?)";
+        return JDBC_helper.updateTong(sql, m.getMa(), m.getTen(), m.getVaiTro()) > 0;
     }
-    public boolean updateChucVu(ChucVu m){
-        String sql="update ChucVu set ten=?, vaiTro=? where ma=?";
-        return JDBC_helper.updateTong(sql,m.getTen(), m.getVaiTro(), m.getMa())>0;
+
+    public boolean updateChucVu(ChucVu m) {
+        String sql = "update ChucVu set ten=?, vaiTro=? where ma=?";
+        return JDBC_helper.updateTong(sql, m.getTen(), m.getVaiTro(), m.getMa()) > 0;
     }
-    public boolean deleteChucVu(String m){
-        String sql="delete ChucVu where ma=?";
-        return JDBC_helper.updateTong(sql,m)>0;
+
+    public boolean deleteChucVu(String m) {
+        String sql = "delete ChucVu where ma=?";
+        return JDBC_helper.updateTong(sql, m) > 0;
     }
-    
+
 }

@@ -66,5 +66,10 @@ public class HoaDonServicesImpl implements HoaDonServices{
     public ArrayList<HoaDonViewModels> timKiemHoaDon(String txt) {
                 return hoaDonRepository.timKiemHoaDon(txt);
     }
+
+    @Override
+    public ArrayList<HoaDonViewModels> locTrangThai(int txt) {
+                return  hoaDonRepository.locTrangThai(txt);
+    }
     
 }

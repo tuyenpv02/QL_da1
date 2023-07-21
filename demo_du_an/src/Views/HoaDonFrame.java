@@ -29,6 +29,15 @@ public class HoaDonFrame extends javax.swing.JPanel {
         
         lstHoaDon = hoaDonServices.getAllHoaDon();
         loadHoaDon(lstHoaDon);
+        loadCBBTrangThai();
+    }
+    
+    void loadCBBTrangThai(){
+        cbbLocTrangThai.removeAllItems();
+        cbbLocTrangThai.addItem("");
+        cbbLocTrangThai.addItem("hóa đơn chờ");
+        cbbLocTrangThai.addItem("đã thanh toán");
+        cbbLocTrangThai.addItem("hủy");
     }
 
     void loadHoaDon(ArrayList<HoaDonViewModels> ds) {
@@ -293,6 +302,25 @@ public class HoaDonFrame extends javax.swing.JPanel {
 
     private void cbbLocTrangThaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbLocTrangThaiItemStateChanged
         // TODO add your handling code here:
+        txtTimKiem.setText("");
+        if (cbbLocTrangThai.getItemCount() > 0) {
+            if (cbbLocTrangThai.getSelectedItem().toString().trim().equalsIgnoreCase("")) {
+                lstHoaDon = hoaDonServices.getAllHoaDon();
+                loadHoaDon(lstHoaDon);
+            } else {
+                String d = cbbLocTrangThai.getSelectedItem().toString();
+                int trangThai;
+                if (d.equalsIgnoreCase("hóa đơn chờ")) {
+                    trangThai = 0;
+                } else if(d.equalsIgnoreCase("đã thanh toán")){
+                    trangThai = 1;
+                }else {
+                    trangThai = 2;
+                }
+                lstHoaDon = hoaDonServices.locTrangThai(trangThai);
+                loadHoaDon(lstHoaDon);
+            }
+        }
     }//GEN-LAST:event_cbbLocTrangThaiItemStateChanged
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
