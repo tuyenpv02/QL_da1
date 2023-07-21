@@ -239,6 +239,40 @@ public class HoaDonRepository {
         }
         return ds;
     }
+    
+    public ArrayList<HoaDonViewModels> locTrangThai(int txt) {
+        String sql = "select hd.Ma as mahd, hd.NgayTao as ngaytao,\n" +
+"hd.NgayThanhToan as NgayThanhToan, nv.Ma as maNV, kh.Ma as makh,\n" +
+"sum(hdct.SoLuong * hdct.DonGia) as 'TongTien'\n" +
+", hd.TrangThai as TrangThai, hd.GhiChu as ghiChu\n" +
+"from HoaDon hd left join NhanVien nv on nv.id=hd.IdNV\n" +
+"left join KhachHang kh on hd.IdKH=kh.Id\n" +
+"left join HoaDonChiTiet hdct on hd.id=hdct.IdHoaDon\n" +
+"left join ChiTietSP ctsp on hdct.IdChiTietSP=ctsp.id\n" +
+"left join SanPham sp on ctsp.IdSP=sp.id\n" +
+"  where hd.TrangThai = ? \n" +
+"group by hd.Ma, hd.NgayTao, hd.NgayThanhToan, nv.Ma, kh.Ma, hd.TrangThai, hd.GhiChu";
+        ArrayList<HoaDonViewModels> ds = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+             ps.setObject(1, txt);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                HoaDonViewModels h = new HoaDonViewModels();
+                h.setMa(rs.getString("mahd"));
+                h.setNgayTao(rs.getString("ngayTao"));
+                h.setNgayThanhToan(rs.getString("NgayThanhToan"));
+                h.setMaNhanVien(rs.getString("maNV"));
+                h.setMaKhachHang(rs.getString("makh"));
+                h.setTongTien(rs.getDouble("TongTien"));
+                h.setTrangThai(rs.getInt("TrangThai"));
+                h.setGhiChu(rs.getString("ghiChu"));
+                ds.add(h);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
 
     public ArrayList<HoaDonHDCTViewModels> getHoaDonCTByMaHD(String ma) {
         String sql = "select hd.Ma as ma, sp.ma as 'masp', sp.ten as 'tensp'"

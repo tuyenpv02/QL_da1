@@ -30,5 +30,7 @@ public interface HoaDonServices {
     // view hoa don
     ArrayList<HoaDonViewModels> getAllHoaDon();
     ArrayList<HoaDonViewModels> timKiemHoaDon(String txt);
+    ArrayList<HoaDonViewModels> locTrangThai(int txt);
     ArrayList<HoaDonHDCTViewModels> getHDCTByMaHD(String ma);
+    
 }
